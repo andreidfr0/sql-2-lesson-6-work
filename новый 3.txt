@@ -1,0 +1,15 @@
+CREATE USER 'repl'@'%' IDENTIFIED BY 'mrloC+t8Lwql';
+
+On the Slave:
+
+stop slave
+reset slave
+On the Master
+
+reset master
+On the Slave
+
+start slave
+show slave status
+If you can include info like which version/flavour of
+ MySQL and OS you are using that will help people responding to your query.
