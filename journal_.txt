@@ -1,3 +1,19 @@
+
+1. установка 2-го инстанса
+2.инициализация и настройка с правами !Админа!
+#  mysqld --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" --validate-config --log_error_verbosity=2
+# initialization root:
+# mysqld --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" --initialize --console
+# setup password > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '-------------';
+# install as server (id=2)
+# use !full! path "d:\Program files\MySQL\MySQL Server 8.0\bin\mysqld.exe" --install MySQL80se --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini"
+# stop
+# mysqladmin.exe -u root -p -h 127.0.0.2 -P 3306 --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" shutdown
+# net start mysql80
+# net start mysql80se
+# net stop mysql80
+# net stop mysql80se
+
 -- master
 cd C:\ProgramData\MySQL\MySQL Server 8.0\bin
 
