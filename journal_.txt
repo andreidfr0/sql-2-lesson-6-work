@@ -148,3 +148,22 @@ Master_SSL_Verify_Server_Cert: No
         Get_master_public_key: 0
             Network_Namespace:
 1 row in set, 1 warning (0.02 sec)
+
+-- на мастере выполним
+select * from _countries order by id desc limit 1;
+-- '235', 'Бонайре, Синт-Эстатиус и Саба'
+
+insert into _countries values(236, 'EEEEEEEEEEEEEE');
+
+
+-- на слэйве выполним
+mysql> select * from _countries order by id desc limit 2;
++-----+-------------------------------+
+| id  | title                         |
++-----+-------------------------------+
+| 236 | EEEEEEEEEEEEEE                |
+| 235 | Бонайре, Синт-Эстатиус и Саба |
++-----+-------------------------------+
+2 rows in set (0.00 sec)
+
+-- Выводы: репликация выполняется.
