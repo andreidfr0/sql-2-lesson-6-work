@@ -1,12 +1,39 @@
-
 1. установка 2-го инстанса
+делал так скачал архив и распаковал в d:\Program files\MySQL\ т.е. папку из архива уменя <mysql-8.0.27-winx64> переименовал в MySQL Server 8.0
+в итоге у меня есть такой путь d:\Program files\MySQL\MySQL Server 8.0\bin
+далее я в my.ini(сохранен по пути (--defaults-file=) "d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini")  указал что 
+# The TCP/IP Port the MySQL Server will listen on
+port=3306
+bind_address=127.0.0.2 
+## привязать к local-хосту с ip 127.0.0.2
+
+# Path to installation directory. All paths are usually resolved relative to this.
+basedir="d:/Program Files/MySQL/MySQL Server 8.0/"
+## файлы инсталляции сервера(SLAVE) c id=2 находятся в d:/Program Files/MySQL/MySQL Server 8.0/
+
+# Path to the database root
+datadir=C:/ProgramData/MySQL/MySQL Server 8.0\DataSlave
+## а хранилище файлов БД находятся в C:/ProgramData/MySQL/MySQL Server 8.0\DataSlave (путь записан верно именно с таким \ слешем)
+далее сделал 
 2.инициализация и настройка с правами !Админа!
-#  mysqld --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" --validate-config --log_error_verbosity=2
-# initialization root:
-# mysqld --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" --initialize --console
-# setup password > ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '-------------';
+# запускаем CMD.EXE с правами админа переходим в 
+# запускаем в консоли именно так - потом выполняю комманды
+  chdir d:\Program files\MySQL\MySQL Server 8.0\bin\
+  d:
+ mysqld --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" --validate-config --log_error_verbosity=2
+# проверяю на корректность
+# initialization
+mysqld --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" --initialize --console
+# просмотреть журнал старта mysql server в косоли будет строка вида >  root password lk.4Ijb563
+# -- это временный пароль он действует до момента остановки сервера
+# setup password > логинимся на сервер с временным паролем полученным на пред. шаге
+ mysql -h 127.0.0.2 -P3306 -u root -p
+#устанавливаю постоянный пароль
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '-------------';
+# прочеркивания заменить на пароль
 # install as server (id=2)
-# use !full! path "d:\Program files\MySQL\MySQL Server 8.0\bin\mysqld.exe" --install MySQL80se --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini"
+# use !full! path 
+ "d:\Program files\MySQL\MySQL Server 8.0\bin\mysqld.exe" --install MySQL80se --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini"
 # stop
 # mysqladmin.exe -u root -p -h 127.0.0.2 -P 3306 --defaults-file="d:\Program files\MySQL\MySQL Server 8.0\bin\my_slave.ini" shutdown
 # net start mysql80
